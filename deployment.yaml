@@ -1,19 +1,36 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: backend-dep
+  name: my-django-app
+  labels:
+    app: back
 spec:
-  replicas: 1
+  containers:
+  - name: django-container
+    image: public.ecr.aws/w7f8a1j5/aws-school-project7-cicd-aws-repo-backend-latest:latest
+    ports:
+    - containerPort: 8000
+    env:
+    - name: MYSQL_HOST
+      value: mysql-svc
+    - name: MYSQL_PORT
+      value: "3306"
+    - name: MYSQL_DB
+      value: awswiki_db
+    - name: MYSQL_USER
+      value: kube-user
+    - name: MYSQL_PASSWORD
+      value: pass123#
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-django-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 8000
+    targetPort: 8000
   selector:
-    matchLabels:
-      app: project7-back
-  template:
-    metadata:
-      labels:
-        app: project7-back
-    spec:
-      containers:
-      - name: backend
-        image: public.ecr.aws/w7f8a1j5/aws-school-project7-cicd-frontend:latest
-        ports:
-        - containerPort: 80
+    app: back
+
