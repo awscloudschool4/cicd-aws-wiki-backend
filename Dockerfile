@@ -12,4 +12,4 @@ RUN pip install -r requirements.txt
 WORKDIR /app/awswiki
 RUN chmod +x /app/run.sh
 EXPOSE 8000
-CMD ["/bin/sh", "/app/run.sh", "echo 'update to develop'"]
+CMD ["/bin/sh", "/app/run.sh", "echo 'update to develop12'"]
