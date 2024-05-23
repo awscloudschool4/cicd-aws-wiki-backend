@@ -27,7 +27,7 @@ kind: Service
 metadata:
   name: my-django-svc
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 8000
     targetPort: 8000
